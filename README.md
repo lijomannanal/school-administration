@@ -11,10 +11,9 @@
 |-----|------|------|-------------|
 | 1 | external | dir | This holds the code for building external system which is required for question 2.<br><b>There is no need to modify anything inside or start it manually</b>
 | 2 | javascript | dir | This holds the base code which you should extend in order to fulfil the requirements |
-| 3 | NodeJS_Assessment_v2.docx | file | The specification for the assignment |
-| 4 | README.md | file | This file |
-| 5 | data.sample.csv | file | Sample csv for question 1 |
-| 6 | school-administration-system.postman_collection.json | file | Postman script for uploading file |
+| 3 | README.md | file | This file |
+| 4 | data.sample.csv | file | Sample csv for question 1 |
+| 5 | school-administration-system.postman_collection_v0.1.json | file | Postman script for all the API endpoints |
 
 <br>
 
