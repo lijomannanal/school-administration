@@ -1,10 +1,4 @@
-# Interview Assignment
-
-This package contains the base code for the interview assignment.<br>
-You can add additional library that will aid you in fulfiling the requirements.
-<br>
-<br>
-Please read through NodeJS_Assessment_v2.docx carefully before you attempt.
+# School administration system
 
 ## Prerequisites
 - NodeJS v12.18.3
