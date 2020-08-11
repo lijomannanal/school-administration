@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+  db:
+    container_name: school-administration-system-mysql
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: school-administration-system
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d:ro
+
+  # mainapp:
+  #   container_name: school-administration-system
+  #   command: ["npm", "run", "start-server"]
+  #   build:
+  #     context: ../javascript
+  #   image: school-administration-system:1.0
+  #   environment:
+  #     TZ: Asia/Singapore
+  #     NODE_ENV: production
+  #   ports:
+  #     - "3500:3000"
+  #   volumes:
+  #     - ../javascript/:/usr/src/app
+  #     - app_node_modules:/usr/src/app/node_modules
+
+  external:
+    container_name: school-administration-system-external
+    build:
+      context: ../external
+      dockerfile: external-system.Dockerfile
+    image: school-administration-system-external:1.0
+    environment:
+      TZ: Asia/Singapore
+      NODE_ENV: production
+    ports:
+      - "5000:5000"
+volumes:
+  app_node_modules:
+
+

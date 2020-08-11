@@ -1,0 +1,207 @@
+{
+	"info": {
+		"_postman_id": "77fd6901-a593-4e99-8cb1-38f98cb49965",
+		"name": "school-administration-system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "File Upload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"contentType": "multipart/form-data",
+							"type": "file",
+							"src": "/C:/Users/lijo.thomas/Pictures/interview-package-js/data.sample.csv"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/upload",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"upload"
+					]
+				},
+				"description": "Upload file to school-administration-system"
+			},
+			"response": []
+		},
+		{
+			"name": "Healtcheck",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "data",
+							"contentType": "multipart/form-data",
+							"type": "file",
+							"src": "/C:/Users/lijo.thomas/Pictures/interview-package-js/data.sample.csv"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/api/healthcheck",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"healthcheck"
+					]
+				},
+				"description": "Healthcheck for application"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Student List (External)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/students?class=2&offset=0&limit=10",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"students"
+					],
+					"query": [
+						{
+							"key": "class",
+							"value": "2"
+						},
+						{
+							"key": "offset",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				},
+				"description": "Retrieving student list from external"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Students",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/class/P2-1/students?offset=0&limit=15",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"class",
+						"P2-1",
+						"students"
+					],
+					"query": [
+						{
+							"key": "offset",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "15"
+						}
+					]
+				},
+				"description": "API to fetch all students by class code"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Class Name",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"className\": \"test class \"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/api/class/P2-1",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"class",
+						"P2-1"
+					]
+				},
+				"description": "API to update class name by class code"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Work load report",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/api/reports/workload",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reports",
+						"workload"
+					]
+				},
+				"description": "API to fetch workload report of all teachers"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

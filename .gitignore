@@ -1,0 +1,7 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Node template
+# Logs
+javascript/NodeJS_Assessment_v2.pdf
+javascript/node_modules
+external/node_modules
+.vscode/launch.json

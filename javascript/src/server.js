@@ -1,0 +1,35 @@
+import 'dotenv/config';
+import sequelize from './config/database';
+import Logger from './config/logger';
+import App from './app';
+
+const MAX_RETRY = 20;
+const LOG = new Logger('server.js');
+const { PORT = 3000 } = process.env;
+
+const startApplication = async (retryCount) => {
+  try {
+    await sequelize.authenticate();
+    if (process.env.NODE_ENV === 'development') {
+      sequelize.sync({ force: true }).then(() => {
+        console.log('Drop and re-sync db.');
+      });
+    }
+    App.listen(PORT, () => {
+      LOG.info(`Application started at http://localhost:${PORT}`);
+    });
+
+  } catch (e) {
+    LOG.error(e);
+
+    const nextRetryCount = retryCount - 1;
+    if (nextRetryCount > 0) {
+      setTimeout(async () => await startApplication(nextRetryCount), 3000);
+      return;
+    }
+
+    LOG.error('Unable to start application');
+  }
+};
+
+startApplication(MAX_RETRY);
