@@ -1,4 +1,4 @@
-# Interview Assignment
+# School administration system
 
 This package contains the base code for the interview assignment.<br>
 You can add additional library that will aid you in fulfiling the requirements.
