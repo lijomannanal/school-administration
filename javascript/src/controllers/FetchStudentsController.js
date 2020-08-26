@@ -22,9 +22,9 @@ const schema = Joi.object().options({ abortEarly: false }).keys({
  * @param {number} limit - Number of  records to retrieve.
  * @return {Promise<Object>} The data with external students total count and array of students.
  * */
-const getExternalStudents =  async (classCode, offset, limit ) => {
+const getExternalStudents =  async (classCode, limit ) => {
   try {
-    return  axios.get(`http://localhost:${process.env.EXTERNAL_STUDENTS_PORT}/students?class=${classCode}&offset=${offset}&limit=${limit}`);
+    return  axios.get(`http://localhost:${process.env.EXTERNAL_STUDENTS_PORT}/students?class=${classCode}&offset=0&limit=${limit}`);
   } catch (error) {
     LOG.error(error);
     throw error;
@@ -52,9 +52,11 @@ const fetchStudentsHandler = async (req, res) => {
       return res.status(BAD_REQUEST).json(formatErrorResponse(message));
     }
     const [ externalStudentsInfo, students ] = await Promise.all([
-      getExternalStudents(classCode, offset, limit ),
-      CommonController.getClassStudents(classCode, offset, limit)
+      getExternalStudents(classCode, offset + limit ),
+      CommonController.getClassStudents(classCode, offset + limit)
     ]);
+    LOG.info(`students from db ${JSON.stringify(students)}`);
+    LOG.info(`external students ${JSON.stringify(externalStudentsInfo.data)}`);
     let totalCount = 0;
     let externalStudents = [];
 
@@ -62,8 +64,9 @@ const fetchStudentsHandler = async (req, res) => {
       totalCount = totalCount +  (externalStudentsInfo.data.count || 0 );
       externalStudents = [...externalStudentsInfo.data.students];
     }
-    totalCount += students.length;
-    const allStudents = [...externalStudents, ...students].sort(sortAlphaNum('name')).slice(offset, limit);
+    totalCount += students.count;
+    let studentsInfo = [...students.rows];
+    const allStudents = [...externalStudents, ...studentsInfo].sort(sortAlphaNum('name')).slice(offset, limit);
     res.json({count: totalCount, students: allStudents});
   } catch (err) {
     LOG.error(err)

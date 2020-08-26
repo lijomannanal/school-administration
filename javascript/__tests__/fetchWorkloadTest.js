@@ -1,30 +1,44 @@
 import App from '../src/server';
 const supertest = require('supertest');
 const request = supertest(App);
-import { OK, BAD_REQUEST } from 'http-status-codes';
+import { OK } from 'http-status-codes';
 
-describe('Route to get all students /api/class/P1/students', () => {
-  it('should return error if the request doesn\'t contain limit', async done => {
-    const response = await request.get('/api/class/P1/students?offset=0');
-    expect(response.status).toBe(BAD_REQUEST);
-    done();
+const filePath = `${__dirname}/data.test.sample.csv`;
+describe('Route to get techers\s work load /api/reports/workload', () => {
+  beforeAll(async () => {
+    request.post('/api/upload')
+    .attach('data', filePath, { contentType: 'application/octet-stream' })
+    .end(function(err, res) {
+      if (err) return Promise.reject(err);
+    });
   });
 
-  it('should return error if the request doesn\'t contain offset', async done => {
-    const response = await request.get('/api/class/P1/students?limit=15');
-    expect(response.status).toBe(BAD_REQUEST);
-    done();
+  it('should return teachers work load if the request url is proper', async () => {
+    const response = await request.get('/api/reports/workload');
+    expect(response.status).toBe(OK);
   });
 
-  it('should return error if the request doesn\'t contain valid classCode', async done => {
-    const response = await request.get(`/api/class/""/students?offset=0&limit=15`);
-    expect(response.status).toBe(BAD_REQUEST);
-    done();
+  it('should return all teachers workload', async () => {
+    const response = await request.get('/api/reports/workload');
+    expect(Object.keys(response.body).length).toBe(4);
   });
 
-  it('should return return students array if the parametera are proper', async done => {
-    const response = await request.get('/api/class/P1/students?offset=0&limit=15');
-    expect(response.status).toBe(OK)
-    done();
+  it('should return an array with 2 subjects for Teacher1', async () => {
+    const response = await request.get('/api/reports/workload');
+    expect((response.body['Teacher 1']).length).toBe(2);
+  });
+
+  it('should return an array with 2 subjects for Teacher1', async () => {
+    const response = await request.get('/api/reports/workload');
+    expect((response.body['Teacher 1']).length).toBe(2);
+  });
+    
+  it('should return \"numberOfClasses\" as 2  for Teacher 1 for the subject \"MATHS\"', async () => {
+    const response = await request.get('/api/reports/workload');
+    let subjectInfo = response.body['Teacher 1'].find(sub => sub.subjectCode === 'MATHS')
+    expect(subjectInfo.numberOfClasses).toBe(2);
+  });
+  afterAll(done => {
+    App.close(done);
   });
 });

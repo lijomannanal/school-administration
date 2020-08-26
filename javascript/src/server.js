@@ -33,3 +33,5 @@ const startApplication = async (retryCount) => {
 };
 
 startApplication(MAX_RETRY);
+
+export default App;
